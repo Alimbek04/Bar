@@ -1,0 +1,36 @@
+from array import array
+
+# Initialize arrays to represent the boxes and their locations
+box_locations = array('i', [0, 0, 0])  # Represents the kilometer marks where the boxes are buried
+box_weights = array('i', [0, 0, 0])    # Represents the weights of the boxes
+
+# Function to check if the total weight of the found boxes is 713 kg
+def check_weights():
+    total_weight = sum(box_weights)
+    return total_weight == 713
+
+# Function to move boxes' locations if the input kilometer mark doesn't contain the cargo
+def move_boxes():
+    for i in range(3):
+        box_locations[i] = (box_locations[i] + i + 1) % 10  # Simulating movement of the boxes
+
+# Main simulation loop
+while not check_weights():
+    print("Enter kilometer marks and weights for the boxes:")
+
+    # Getting kilometer marks and weights from the Martians
+    for i in range(3):
+        # Check if the total weight is already 713 kg
+        if check_weights():
+            break
+
+        box_locations[i] = int(input(f"Box {i + 1} - Kilometer mark: "))
+        box_weights[i] = int(input(f"Box {i + 1} - Weight: "))
+
+    # Simulating tentacle movement if the kilometer marks are incorrect
+    move_boxes()
+
+# Output the final locations and weights of the found boxes
+print("\nCongratulations! Boxes found at the following kilometer marks:")
+for i in range(3):
+    print(f"Box {i + 1}: {box_locations[i]} kilometers - {box_weights[i]} kg")
